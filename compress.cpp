@@ -9,7 +9,7 @@ using namespace std;
 int min_freq(Node **node, const int *arr){
     int min = 0;
     int num = -1;
-    for(int i = 0; i < 56; i++){
+    for(int i = 0; i < 55; i++){
         if(arr[i] == 0) continue;
         else{
             if(min == 0) {
@@ -27,32 +27,37 @@ int min_freq(Node **node, const int *arr){
 }
 
 Node *mergeNode(Node *leftNode, Node *rightNode) {
-    Node *merge = new Node(leftNode->getstr() + rightNode->getstr(), leftNode->getnum() + rightNode->getnum());
+    Node *merge = new Node(leftNode->getstr() + rightNode->getstr(), leftNode->getnum() + rightNode->getnum(), leftNode, rightNode);
     return merge;
 }
 
 int main(int argc, char *argv[]) {
     // TODO: implement this function
-    int flag = 0;
+    int flag;
     int count = 0;
     int freq[55];
     Node *node[55];
     char c;
 
+    for(int i = 0; i < 55; i++){
+        freq[i] = 0;
+    }
+
     if(argc == 3) flag = 1;
+    else flag = 0;
+
     string name = argv[argc - 1];
     ifstream file;
     file.open(name);
 
-    for(int i = 0; i < 55; i++){
-        freq[i] = 0;
-    }
+
 
     while(file.get(c)){
         if(c == ' ') freq[26] ++;
         else if(c == '\n') freq[27] ++;
         else freq[c - 'a'] ++;
     }
+
     for(int i = 0; i < 26; i++){
         if(freq[i] != 0){
             count ++;
@@ -78,11 +83,13 @@ int main(int argc, char *argv[]) {
         freq[left] = 0;
 
         node[index] = mergeNode(node[left], node[right]);
+        freq[index] = node[index]->getnum();
         index ++;
         count --;
     }
 
     HuffmanTree tree(node[index - 1]);
+
     if(flag == 1) tree.printTree();
     else{
         file.close();

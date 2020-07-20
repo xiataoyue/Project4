@@ -52,7 +52,7 @@ void Node::incnum() {
 
 Node *Node::mergeNodes(Node *leftNode, Node *rightNode) {
     // TODO: implement this function.
-    Node *merge = new Node(leftNode->getstr() + rightNode->getstr(), leftNode->getnum() + rightNode->getnum());
+    Node *merge = new Node(leftNode->getstr() + rightNode->getstr(), leftNode->getnum() + rightNode->getnum(), leftNode, rightNode);
     return merge;
 }
 
@@ -106,7 +106,7 @@ string BinaryTree::findPath(const string &s) const{
 
 static int sum_helper(Node *node){
     if(node == NULL) return 0;
-    return node->getnum() + node->leftSubtree()->getnum() + node->rightSubtree()->getnum();
+    return node->getnum() + sum_helper(node->leftSubtree()) + sum_helper(node->rightSubtree());
 }
 
 int BinaryTree::sum() const {
@@ -169,7 +169,7 @@ static bool allPath_helper(Node *node, int sum){
     if(node == NULL && sum >= 0) return false;
     if(node->getnum() > sum) return true;
     if(!allPath_helper(node->leftSubtree(), sum - node->getnum())) return false;
-    return allPath_helper(node->rightSubtree(), node->getnum() - sum);
+    return allPath_helper(node->rightSubtree(), sum - node->getnum());
 }
 bool BinaryTree::allPathSumGreater(int sum) const {
     // TODO: implement this function.

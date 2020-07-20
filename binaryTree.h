@@ -240,14 +240,4 @@ public:
     // EFFECTS: Returns a copy of this tree. Hint: use deep copy.
 };
 
-static void delete_Node(Node *n);
-static Node *new_root(Node *node);
-static Node *find_node(Node *node, Node *tree);
-
-static std::string findPath_helper(Node *n, const std::string &s);
-static void preorder_helper(Node *node);
-static void inorder_helper(Node *node);
-static void postorder_helper(Node *node);
-static bool covered_helper(Node *node, Node *tree);
-static bool contained_helper(Node *node, Node *tree);
 #endif
